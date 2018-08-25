@@ -1,37 +1,46 @@
 var data = [
-    "Argentina",
-    "Chile",
-    "Paraguay",
-    "Uruguay",
-    "Brazil",
-    "Bolivia",
-    "Peru",
-    "Colombia",
-    "Usa",
-    "Mexico",
-    "Alaska",
-    "Alemania",
-    "Canada",
-    "Arabia"
-];
+        "argentina",
+        "chile",
+        "paraguay",
+        "uruguay",
+        "brazil",
+        "bolivia",
+        "peru",
+        "colombia",
+        "usa",
+        "mexico",
+        "alaska",
+        "alemania",
+        "canada",
+        "arabia"
+    ];
 
-function AcSearch(container, id){
-    this.domContext = container
-    this.idForInput = id
-    this.createInputField = function(){
-        let inputField = document.createElement("input")
-        inputField.setAttribute('type', 'text')
-        inputField.setAttribute('id', this.idForInput)
+let inputField = document.getElementById("search")
 
-        document.getElementById(this.domContext)
-        .appendChild(inputField)
+let context = document.getElementById("container")
+context.appendChild(inputField)
 
-        inputField.addEventListener('keyup', this.onKeyUp)
+inputField.addEventListener('keyup', function(){
+    let searchValue = this.value;
+    let result = data.filter(function(item){
+        return item.indexOf(searchValue) > -1
+    })
+    .map(function(itemFiltered){
+        return `<p>${itemFiltered}</p>`
+    })
+    .reduce(function(acc, element){
+        return acc + element
+    })
+
+    let resultContainer = document.querySelector('.results');
+
+    if(resultContainer != null){
+        resultContainer.parentNode.removeChild(resultContainer)
     }
-    this.onKeyUp = function(){
-        console.log("hello")
-    }
-}
 
-var newSearchField = new AcSearch("container", "search");
-newSearchField.createInputField();
+    let inputFieldResultContainer = document.createElement('div')
+    inputFieldResultContainer.setAttribute('class', 'results')
+
+    inputFieldResultContainer.innerHTML = result;
+    context.appendChild(inputFieldResultContainer);
+})
