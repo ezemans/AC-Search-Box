@@ -54,7 +54,7 @@ function filterData(countries, searchValue){
         return item.substring(0, search) === searchValue
     })
     .map(function(itemFiltered){
-        return `<p>${itemFiltered}</p>`
+        return `<p class="country"><i class="fas fa-map-marker-alt"></i> <span>${itemFiltered}</span></p>`
     })
     .reduce(function(acc, element){
         return acc + element
