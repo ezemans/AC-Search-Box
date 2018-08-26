@@ -17,13 +17,41 @@ var data = [
 
 let inputField = document.getElementById("search")
 
-let context = document.getElementById("container")
-context.appendChild(inputField)
-
 inputField.addEventListener('keyup', function(){
     let searchValue = this.value;
-    let result = data.filter(function(item){
-        return item.indexOf(searchValue) > -1
+
+    if(searchValue !== ""){
+        var result = filterData(data, searchValue)
+    }else{
+        removeResultContainer()
+        return
+    }
+
+    removeResultContainer()
+    addResultContainer(result)
+})
+
+function removeResultContainer(){
+    let resultContainer = document.querySelector('.results');
+
+    if(resultContainer != null){
+        resultContainer.parentNode.removeChild(resultContainer)
+    }
+}
+
+function addResultContainer(result){
+    let context = document.getElementById("container")
+    let inputFieldResultContainer = document.createElement('div')
+    inputFieldResultContainer.setAttribute('class', 'results')
+
+    inputFieldResultContainer.innerHTML = result;
+    context.appendChild(inputFieldResultContainer);
+}
+
+function filterData(countries, searchValue){
+    return countries.filter(function(item){
+        var search = searchValue.length;
+        return item.substring(0, search) === searchValue
     })
     .map(function(itemFiltered){
         return `<p>${itemFiltered}</p>`
@@ -31,16 +59,4 @@ inputField.addEventListener('keyup', function(){
     .reduce(function(acc, element){
         return acc + element
     })
-
-    let resultContainer = document.querySelector('.results');
-
-    if(resultContainer != null){
-        resultContainer.parentNode.removeChild(resultContainer)
-    }
-
-    let inputFieldResultContainer = document.createElement('div')
-    inputFieldResultContainer.setAttribute('class', 'results')
-
-    inputFieldResultContainer.innerHTML = result;
-    context.appendChild(inputFieldResultContainer);
-})
+}
