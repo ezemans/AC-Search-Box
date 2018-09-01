@@ -1,9 +1,9 @@
 var data = [
-        "argentina",
+        "Argentina",
         "chile",
         "paraguay",
         "uruguay",
-        "brazil",
+        "Brazil",
         "bolivia",
         "peru",
         "colombia",
@@ -11,14 +11,14 @@ var data = [
         "mexico",
         "alaska",
         "alemania",
-        "canada",
+        "Canada",
         "arabia"
     ];
 
 let inputField = document.getElementById("search")
 
 inputField.addEventListener('keyup', function(){
-    let searchValue = this.value;
+    let searchValue = this.value.toLowerCase();
 
     if(searchValue !== ""){
         var result = filterData(data, searchValue)
@@ -51,7 +51,7 @@ function addResultContainer(result){
 function filterData(countries, searchValue){
     return countries.filter(function(item){
         var search = searchValue.length;
-        return item.substring(0, search) === searchValue
+        return item.toLowerCase().substring(0, search) === searchValue
     })
     .map(function(itemFiltered){
         return `<p class="country"><i class="fas fa-map-marker-alt"></i> <span>${itemFiltered}</span></p>`
